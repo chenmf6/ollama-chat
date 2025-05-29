@@ -1,0 +1,48 @@
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 忽略 Node.js 相关文件
+node_modules/
+
+# 忽略构建输出目录
+dist/
+build/
+
+# 忽略环境配置文件
+.env.local
+.env.*.local
+
+# 忽略日志文件
+*.log
+logs/
+
+# 忽略 IDE 和编辑器生成的文件
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 忽略临时文件
+*.tmp
+*.swp
+*.swo
+
+# 忽略测试覆盖率报告
+coverage/
+
+# 忽略上传或下载的静态资源缓存
+public/uploads/
+public/cache/
+
+# 忽略自动生成的文件
+*.iml
+*.class
+
+# 忽略敏感信息文件
+secrets.json
+config.json
+
+# 忽略其他常见文件
+*.bak
+*.orig

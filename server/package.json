@@ -1,0 +1,30 @@
+{
+  "name": "ollama-chat-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha test/*.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.3",
+  "engines": {
+    "node": "^18.16.0"
+  },
+  "dependencies": {
+    "koa": "^2.16.0",
+    "socket.io": "^4.8.1",
+    "undici": "^7.6.0"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "esmock": "^2.7.0",
+    "koa-static": "^5.0.0",
+    "mocha": "^11.1.0",
+    "sinon": "^20.0.0"
+  }
+}
