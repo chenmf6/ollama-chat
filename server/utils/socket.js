@@ -38,7 +38,7 @@ export function initSocket(io) {
 
     // 监听客户端发送的 request 事件
     socket.on("request", ({ prompt }) => {
-      console.log('onrequest', prompt)
+      console.log('socket on request:', prompt)
       if (!prompt) {
         console.error("Missing prompt");
         return;

@@ -5,17 +5,15 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "dev": "NODE_ENV=development pnpx nodemon app.js",
     "start": "node app.js",
     "test": "mocha test/*.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.6.3",
-  "engines": {
-    "node": "^18.16.0"
-  },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "koa": "^2.16.0",
     "socket.io": "^4.8.1",
     "undici": "^7.6.0"
