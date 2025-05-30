@@ -1,6 +1,6 @@
 import { request } from "undici";
 
-const OLLAMA_URL = "http://127.0.0.1:11434/api/generate";
+const OLLAMA_URL = `${process.env.OLLAMA_HOST}/api/generate`;
 const MODEL = "llama3.2";
 
 // 处理流式响应的核心逻辑
@@ -11,6 +11,8 @@ async function handleStreamResponse(prompt, onChunk, onError, signal) {
       prompt,
       stream: true,
     });
+
+    console.log("ollama request", requestBody);
 
     const { statusCode, body } = await request(OLLAMA_URL, {
       method: "POST",
@@ -33,7 +35,7 @@ async function handleStreamResponse(prompt, onChunk, onError, signal) {
     }
   } catch (error) {
     if (!signal.aborted) {
-      console.error("Error generating response:", error.message);
+      console.error("Error generating response:", error, error.message);
       onError(error);
     }
   }

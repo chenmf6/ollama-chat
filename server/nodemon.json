@@ -1,0 +1,5 @@
+{
+  "watch": [".", "src", "config"],
+  "ext": "js mjs json cjs env yml",
+  "exec": "node --experimental-specifier-resolution=node app.js"
+}

@@ -1,8 +1,9 @@
 import { io } from "socket.io-client";
 
-const URL = "http://127.0.0.1:4000"
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL
+console.log('connecting to:', SOCKET_URL)
 
-const socket = io(URL, {
+const socket = io(SOCKET_URL, {
   transports: ["websocket"],
 });
 

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import socket from "../utils/socket";
-import useSocket from '../hooks/useSocket';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ChatArea() {
   const [messageIds, setMessageIds] = useState([]); // 消息 ID 列表
@@ -54,13 +54,10 @@ export default function ChatArea() {
     updateStreamingId(null); // 清空流式响应消息
   }, []);
 
-  useSocket('error', handleError)
-  useSocket('response', handleResponse)
-
   // 新的一轮对话
   const handleNewRound = () => {
-    const userMessageId = Date.now(); // 用户消息 ID
-    const systemMessageId = userMessageId + 1; // 系统消息 ID
+    const userMessageId = uuidv4(); // 用户消息 ID
+    const systemMessageId = uuidv4(); // 系统消息 ID
 
     // 添加用户消息和预留空的系统消息
     setMessageIds((prev) => [...prev, userMessageId, systemMessageId]);
@@ -89,6 +86,7 @@ export default function ChatArea() {
     setCurrentMessage(""); // 清空输入框
     // 发送请求
     socket.emit("request", { prompt: currentMessage });
+    console.log('- client send request:', currentMessage)
   };
 
   // 处理键盘事件：按下回车键发送消息
@@ -114,6 +112,15 @@ export default function ChatArea() {
     }
   };
 
+  useEffect(() => {
+    socket.on("response", handleResponse);
+    socket.on("error", handleError);
+    return () => {
+      socket.off("response", handleResponse);
+      socket.off("error", handleError);
+    };
+  }, [handleResponse, handleError]);
+
   // 消息更新时自动滚动到底部
   useEffect(() => {
     scrollToBottom();
@@ -127,7 +134,7 @@ export default function ChatArea() {
         className="flex-1 overflow-y-auto p-4 space-y-2"
       >
         {messageIds.map((id) => (
-          <MessageItem key={id} {...messageMap[id]} />
+          <MessageItem key={id} streaming={streamingId === id} {...messageMap[id]} />
         ))}
       </div>
 
@@ -170,7 +177,7 @@ function Spinner() {
   );
 }
 
-function MessageItem({ type, content }) {
+function MessageItem({ type, content, streaming }) {
   return (
     <div
       className={`p-2 rounded break-words min-h-[2em] ${
@@ -179,7 +186,7 @@ function MessageItem({ type, content }) {
           : "bg-gray-200 text-gray-800 self-start"
       }`}
     >
-      {content || <Spinner />}
+      {content ? content : streaming ? <Spinner /> : ""}
     </div>
   );
 }
